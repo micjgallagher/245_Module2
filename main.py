@@ -27,6 +27,7 @@ def generate_sync_key():
 def get_key_stdin():
     key_text = input().strip()
     key = key_text.encode("utf-8")
+    key = Fernet(key)
     return key
 
 
@@ -35,8 +36,19 @@ def s_encrypt():
     key = get_key_stdin()
     print(key)
     text = input("Enter the text to encrypt")
+    encrypted = key.encrypt(text.encode("utf-8"))
+    print(encrypted.decode("utf-8"))
 
 def s_decrypt():
-    pass
+    print("Please enter your key")
+    key = get_key_stdin()
+    print("Enter the encrypted text")
+    encrypted_text = input().strip()
+    encrypted_bytes = encrypted_text.encode("utf-8")
+
+    result = key.decrypt(encrypted_bytes)
+    print(result.decode("utf-8"))
+
+    
 
 main()
